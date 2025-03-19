@@ -12,6 +12,9 @@
 // module.exports = { db, messaging };
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -28,5 +31,17 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app)
+const auth = getAuth(app);
+const messaging = getMessaging(app);
 
-export {db}
+// Request Notification Permission
+export const requestNotificationPermission = async () => {
+  try {
+    const token = await getToken(messaging, { vapidKey:"BNIZ8S4CU726pI63ft3JvcDMXnfEm4QczaEa6ak4nKVE7VRXx0FiwuqqaQV_T_gzwy6F6zGncUIX24f68kHChyo"});
+    console.log("FCM Token:", token);
+  } catch (error) {
+    console.error("Error getting FCM token", error);
+  }
+};
+
+export {db, auth, messaging, getToken, onMessage}

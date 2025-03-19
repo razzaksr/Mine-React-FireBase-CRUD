@@ -71,6 +71,7 @@ const App = () => {
     const data = await viewAccountByCustomer(selected)
     // alert(found)
     setAccounts(data)
+    alert('filtered')
   }
 
   return (
